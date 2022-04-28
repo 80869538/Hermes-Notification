@@ -38,7 +38,7 @@ const intervalId = setInterval(function () {
     
     (async () => {
         /* Initiate the Puppeteer browser */
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({args: ['--no-sandbox']});
         const page = await browser.newPage();
         await page.goto(`https://www.hermes.com/au/en/category/women/bags-and-small-leather-goods/bags-and-clutches/#|`, { waitUntil: "networkidle0"})
 
