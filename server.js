@@ -45,7 +45,6 @@ const intervalId = setInterval(function () {
         await page.waitForSelector('li.product-grid-list-item')
         const elements = await page.$$('li.product-grid-list-item');
         const html = await page.content();
-        console.log(html)
         if(elements.length != initial_product_count){
                 console.log(elements.length)
                 //Slack Alert Notification
