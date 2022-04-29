@@ -62,7 +62,7 @@ const intervalId = setInterval(function () {
         }
         return browser
   
-    })().then(function(value) {value.close()}, function(error) {})
+    })().then(function(value) {value.close()}, function(error) {console.log(error)})
 
     // request(urlToCheck, function (err, response, body) {
     //     //if the request fail
