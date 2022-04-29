@@ -43,29 +43,35 @@ const intervalId = setInterval(function () {
         const navigationPromise = page.waitForNavigation({waitUntil: "domcontentloaded"});
 
         console.log("fetch page")
-        await page.goto(`https://www.hermes.com/au/en/category/women/bags-and-small-leather-goods/bags-and-clutches/#|`, { waitUntil: "networkidle0"})
+        let status = await page.goto(`https://www.hermes.com/au/en/category/women/bags-and-small-leather-goods/bags-and-clutches/#|`, { waitUntil: "networkidle0"})
         await navigationPromise;
-        const html = await page.content();
+        console.log(status.status())
+        if (status.status() == 200){
 
-        await page.waitForSelector('li.product-grid-list-item')
-        const elements = await page.$$('li.product-grid-list-item');
-        console.log(elements.length)
-        if(elements.length != initial_product_count){
-                console.log(elements.length)
-                //Slack Alert Notification
-                await slack.alert(`🔥🔥🔥  <${urlToCheck}/|Change detected in ${urlToCheck}, product list now contains ${elements.length} products>  🔥🔥🔥 `, function (err) {
-                    if (err) {
-                        console.log('Slack API error:', err);
-                    } else {
-                        console.log('Message received in slack!');
-                    }
-                });
-                initial_product_count = elements.length
-              
+            const html = await page.content();
+
+            await page.waitForSelector('li.product-grid-list-item')
+            const elements = await page.$$('li.product-grid-list-item');
+            console.log(elements.length)
+            if(elements.length != initial_product_count){
+                    console.log(elements.length)
+                    //Slack Alert Notification
+                    await slack.alert(`🔥🔥🔥  <${urlToCheck}/|Change detected in ${urlToCheck}, product list now contains ${elements.length} products>  🔥🔥🔥 `, function (err) {
+                        if (err) {
+                            console.log('Slack API error:', err);
+                        } else {
+                            console.log('Message received in slack!');
+                        }
+                    });
+                    initial_product_count = elements.length
+                  
+            }
+
         }
+
         return browser
   
-    })().then(function(value) {value.close()}, function(error) {console.log(error)})
+    })().then(function(value) {value.close()}, function(error) {console.log(error);value.close()})
 
     // request(urlToCheck, function (err, response, body) {
     //     //if the request fail
