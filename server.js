@@ -40,12 +40,15 @@ const intervalId = setInterval(function () {
         /* Initiate the Puppeteer browser */
         const browser = await puppeteer.launch({args: ['--no-sandbox']});
         const page = await browser.newPage();
+        const navigationPromise = page.waitForNavigation({waitUntil: "domcontentloaded"});
+
         console.log("fetch page")
         await page.goto(`https://www.hermes.com/au/en/category/women/bags-and-small-leather-goods/bags-and-clutches/#|`, { waitUntil: "networkidle0"})
+        await navigationPromise;
+        const html = await page.content();
 
         await page.waitForSelector('li.product-grid-list-item')
         const elements = await page.$$('li.product-grid-list-item');
-        const html = await page.content();
         console.log(elements.length)
         if(elements.length != initial_product_count){
                 console.log(elements.length)
