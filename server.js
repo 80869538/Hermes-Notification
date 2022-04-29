@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 3000;
 //Main configuration variables
 const urlToCheck = `https://www.hermes.com/au/en/category/women/bags-and-small-leather-goods/bags-and-clutches/#|`;
 const elementsToSearchFor = ['1'];
-const checkingFrequency = 0.2 * 60000; //first number represent the checkingFrequency in minutes
+const checkingFrequency = 0.5 * 60000; //first number represent the checkingFrequency in minutes
 let initial_product_count = 5
 //Slack Integration
 const SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/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';
